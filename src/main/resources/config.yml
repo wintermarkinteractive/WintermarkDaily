@@ -1,0 +1,128 @@
+# ============================================================
+#  Wintermark Daily Rewards - config.yml
+#  Text uses MiniMessage colors: <gold>, <green>, <bold>, <#C9A227> ...
+#  Placeholders: <player>, <day>, <days>, <streak>, <best>, <total>, <time> (until the next day)
+#  After editing: /daily reload
+# ============================================================
+
+# Timezone for "a new day starts at midnight", e.g. Europe/Amsterdam, Asia/Manila, America/New_York.
+# Empty = the server's timezone. Can also be set in-game: /daily timezone <zone>
+timezone: ""
+
+streak:
+  # What happens when a player misses a day:
+  #   RESET = back to day 1   |   KEEP = continue where they were (only the streak counter resets)
+  on-miss: RESET
+  # Extra days EVERY player may skip without losing the streak. 0 = must claim every day.
+  grace-days: 0
+  # Streak freezes are given to single players (/daily freezes give <player> <amount>, or as a reward).
+  # Each missed day (after the grace days) uses one freeze automatically, so the streak is kept.
+  # Max freezes a player can hold. 0 = no limit.
+  max-freezes: 0
+  # After the last day:  LOOP = start again at day 1   |   REPEAT-LAST = keep giving the last day's reward
+  after-last-day: LOOP
+
+join:
+  # Chat reminder (with a clickable [CLAIM] button) when today's reward is waiting.
+  reminder: true
+  # Open the calendar automatically instead of the reminder.
+  open-menu: false
+  delay-seconds: 3
+
+sounds:
+  # Minecraft sound keys. Leave empty for no sound.
+  claim: "entity.player.levelup"
+  reminder: "block.note_block.pling"
+  click: "ui.button.click"
+  bonus: "ui.toast.challenge_complete"
+
+# ------------------------------------------------------------
+# Reward days, numbered 1, 2, 3, ... (max 28). Shown 7 per row in the menu.
+#   display:  item shown in the menu ("MATERIAL:amount"). Default = the first item.
+#   display-name / display-lore: name and lore of the menu item.
+#   items:    items the player gets ("MATERIAL:amount").
+#   commands: run by the console. <player> and <day> are replaced.
+#             Examples: "eco give <player> 250", "crate givekey <player> vote 1"
+#   message:  sent to the player when they claim.
+# ------------------------------------------------------------
+days:
+  1:
+    display-name: "<yellow>Day 1"
+    display-lore: ["<gray>8 Bread"]
+    items: ["BREAD:8"]
+    message: "<green>Day 1 claimed: <white>8 Bread</white>. Come back tomorrow!"
+  2:
+    display-name: "<yellow>Day 2"
+    display-lore: ["<gray>16 Torches", "<gray>8 Coal"]
+    items: ["TORCH:16", "COAL:8"]
+    message: "<green>Day 2 claimed: <white>16 Torches and 8 Coal</white>."
+  3:
+    display-name: "<yellow>Day 3"
+    display-lore: ["<gray>12 Iron Ingots"]
+    items: ["IRON_INGOT:12"]
+    message: "<green>Day 3 claimed: <white>12 Iron Ingots</white>."
+  4:
+    display-name: "<yellow>Day 4"
+    display-lore: ["<gray>5 XP levels"]
+    display: "EXPERIENCE_BOTTLE:5"
+    commands: ["xp add <player> 5 levels"]
+    message: "<green>Day 4 claimed: <white>5 XP levels</white>."
+  5:
+    display-name: "<yellow>Day 5"
+    display-lore: ["<gray>8 Gold Ingots"]
+    items: ["GOLD_INGOT:8"]
+    message: "<green>Day 5 claimed: <white>8 Gold Ingots</white>."
+  6:
+    display-name: "<yellow>Day 6"
+    display-lore: ["<gray>2 Golden Apples"]
+    items: ["GOLDEN_APPLE:2"]
+    message: "<green>Day 6 claimed: <white>2 Golden Apples</white>. One more day!"
+  7:
+    display-name: "<gold><bold>Day 7 - Big reward"
+    display-lore: ["<gray>4 Diamonds", "<gray>10 XP levels"]
+    display: "DIAMOND:4"
+    items: ["DIAMOND:4"]
+    commands: ["xp add <player> 10 levels"]
+    message: "<gold><bold>Day 7!</bold> <white>4 Diamonds and 10 XP levels</white>. The calendar starts again tomorrow."
+
+# ------------------------------------------------------------
+# Streak bonuses: an extra reward when a player's streak (days in a row) reaches this number.
+# Given on top of that day's normal reward. Same options as a day, plus broadcast: true.
+# A missed day (with on-miss: RESET) starts the streak over, so long streaks are worth protecting.
+# ------------------------------------------------------------
+streak-bonuses:
+  7:
+    items: ["DIAMOND:2"]
+    message: "<aqua><bold>7-day streak!</bold></aqua> <white>Bonus: 2 Diamonds</white>"
+  14:
+    items: ["EMERALD:16"]
+    commands: ["xp add <player> 15 levels", "daily freezes give <player> 1"]
+    message: "<green><bold>14-day streak!</bold></green> <white>Bonus: 16 Emeralds, 15 XP levels and a streak freeze</white>"
+    broadcast: true
+  30:
+    items: ["NETHERITE_INGOT:1", "ENCHANTED_GOLDEN_APPLE:1"]
+    message: "<light_purple><bold>30-day streak!</bold></light_purple> <white>Bonus: Netherite and an Enchanted Golden Apple</white>"
+    broadcast: true
+
+messages:
+  prefix: "<dark_gray>[<gold>Daily</gold>]</dark_gray> "
+  join-reminder: "<green>Your daily reward <gray>(day <white><day></white>)</gray> is ready! <click:run_command:'/daily'><hover:show_text:'<gray>Open the calendar'><gold><bold>[CLAIM]</bold></gold></hover></click>"
+  streak-lost: "<red>You missed a day, so your streak started over."
+  freezes-used: "<aqua>You missed <white><used></white> day(s), but your streak freezes protected your streak! <gray>(<freezes> left)"
+  freezes-received: "<aqua>You received <white><amount></white> streak freeze(s)! <gray>Each one protects your streak for one missed day. (<freezes> total)"
+  no-permission: "<red>You don't have permission to do that."
+  menu-title: "<dark_gray>Daily Rewards"
+  day-claimed-name: "<green>Day <day> <dark_green>✔"
+  day-claim-lore: "<green><bold>Click to claim!"
+  day-tomorrow-lore: "<gray>Available in <yellow><time></yellow>"
+  day-locked-lore: "<dark_gray>Day <day>"
+  info-name: "<gold>Your streak: <yellow><streak></yellow> day(s)"
+  info-lore:
+    - "<gray>Best streak: <white><best></white>"
+    - "<gray>Rewards claimed: <white><total></white>"
+    - "<gray>Next day starts in: <white><time></white>"
+  # Added under the info lore while the player has streak freezes.
+  info-freezes: "<aqua>Streak freezes: <white><freezes></white> <dark_gray>(protect missed days)"
+  # Added under the info lore while there is a next streak bonus.
+  info-bonus: "<aqua>Next streak bonus: <white>day <next-bonus></white> <dark_gray>(<bonus-left> to go)"
+  bonus-broadcast: "<white><player></white> <gray>reached a</gray> <gold><streak>-day</gold> <gray>daily streak!</gray>"

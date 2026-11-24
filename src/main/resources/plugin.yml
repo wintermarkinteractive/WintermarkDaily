@@ -1,0 +1,14 @@
+name: WintermarkDaily
+version: '${version}'
+main: io.github.wintermarkinteractive.daily.DailyPlugin
+description: Daily login rewards with a calendar menu, streaks and join reminders.
+author: Wintermark Interactive
+website: https://github.com/wintermarkinteractive
+api-version: '26.3'
+permissions:
+  wintermark.daily.use:
+    description: Open the calendar and claim daily rewards.
+    default: true
+  wintermark.daily.admin:
+    description: Reset players, set days, test tools, reload.
+    default: op
